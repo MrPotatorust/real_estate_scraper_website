@@ -1,25 +1,64 @@
 {% extends 'scraper_integration/base.html' %}
+{% load custom_filters %}
 
 
 {% block content %}
 
 <div class="container">
     <table class="table">
+        <thead class = "thead-dark">
+            <tr>
+                <th><th>Price</th>
+                <th>Price_per_sq_m</th>
+                <th>Sq_meters</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th class="col">Mean</th>
+                <td>{{data.price|avg}}</td>
+                <td>{{data.price_per_sq_m|avg}}</td>
+                <td>{{data.sq_meter|avg}}</td>
+            </tr>
+            <tr>
+                <th class="col">Median</th>
+                <td>{{data.price|median}}</td>
+                <td>{{data.price_per_sq_m|median}}</td>
+                <td>{{data.sq_meter|median}}</td>
+            </tr>
+            <tr>
+                <th class="col">Max</th>
+                <td>{{data.price|max}}</td>
+                <td>{{data.price_per_sq_m|max}}</td>
+                <td>{{data.sq_meter|max}}</td>
+            </tr>
+            <tr>
+                <th class="col">Min</th>
+                <td>{{data.price|min}}</td>
+                <td>{{data.price_per_sq_m|min}}</td>
+                <td>{{data.sq_meter|min}}</td>
+            </tr>
+            
+        </tbody>
+    </table>
+    <table class="table">
         <thead class="thead-dark">
             <tr>
-                {% for i in data %}
-                <th scope="col">{{i}}</th>
-                {% endfor %}                
+                <th>Price</th>
+                <th>Price_per_sq_m</th>
+                <th>Sq_meters</th>
+                <th>Location</th>
+                <th>Type_of_property</th>            
             </tr>
         </thead>
         <tbody>
             {% for i in range %}
             <tr>
-                <td>{{ data.price|slice:":forloop.counter0"|last }}</td>
-                <td>{{ data.price_per_sq_m|slice:":forloop.counter0"|last }}</td>
-                <td>{{ data.sq_meter|slice:":forloop.counter0"|last }}</td>
-                <td>{{ data.location|slice:":forloop.counter0"|last }}</td>
-                <td>{{ data.type_of_property|slice:":forloop.counter0"|last }}</td>
+                <td>{{ data.price|get_item:i }}</td>
+                <td>{{ data.price_per_sq_m|get_item:i }}</td>
+                <td>{{ data.sq_meter|get_item:i }}</td>
+                <td>{{ data.location|get_item:i }}</td>
+                <td>{{ data.type_of_property|get_item:i }}</td>
             </tr>
             {% endfor %}
         </tbody>

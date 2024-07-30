@@ -31,7 +31,6 @@ def scraper(request):
         form = ScrapingArgsForm(request.POST)
         if form.is_valid():
             data = get_data(form['buy_or_rent'].value(), form['type_of_property'].value(), form['location'].value())
-
             request.session['scraper_data'] = data
             return redirect(reverse('scraper_integration:results'))
     else:
@@ -42,6 +41,5 @@ def scraper(request):
 def results(request):
     data = request.session['scraper_data']
     del request.session['scraper_data']
-    print(data['price'][2])
     data_len = range(len(data['price']))
     return render(request, 'scraper_integration/results.html', {'data': data, 'range': data_len})
