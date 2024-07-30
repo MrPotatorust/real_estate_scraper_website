@@ -11,7 +11,7 @@ import numpy as np
 import datetime
 import os
 
-
+import time
 
 
 
@@ -116,8 +116,14 @@ def get_data(buy_or_rent, type_of_property, location):
                     data["price_per_sq_m"].append(float(convert_to_num(text[index+2:-4])))
 
                 else:
-                    data["price_per_sq_m"].append(float(convert_to_num(text[index:-9])))
-
+                    try:
+                        data["price_per_sq_m"].append(float(convert_to_num(text[index:-5])))
+                    except:
+                        print(convert_to_num(text[index:-5]))
+                        print(text)
+                        print(index)
+                        time.sleep(399)
+            
         #scrapes and append rest of the data
         count = 0
         for info in main_info:
@@ -154,18 +160,4 @@ def get_data(buy_or_rent, type_of_property, location):
     driver.quit()
 
 
-
-    # creates a csv if it doesnt exist and puts it in the data folder
-    cur_date = datetime.datetime.now()
-    file_name = url[29:-1].replace('/', '-')
-    directory = 'data/'+file_name+"/"
-
-
-    os.makedirs(directory, exist_ok=True)
-
-
-
-
-    #creates the dataframe and puts it in the csv
-    df = pd.DataFrame(data)
-    return df
+    return data

@@ -1,0 +1,29 @@
+{% extends 'scraper_integration/base.html' %}
+
+
+{% block content %}
+
+<div class="container">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                {% for i in data %}
+                <th scope="col">{{i}}</th>
+                {% endfor %}                
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in range %}
+            <tr>
+                <td>{{ data.price|slice:":forloop.counter0"|last }}</td>
+                <td>{{ data.price_per_sq_m|slice:":forloop.counter0"|last }}</td>
+                <td>{{ data.sq_meter|slice:":forloop.counter0"|last }}</td>
+                <td>{{ data.location|slice:":forloop.counter0"|last }}</td>
+                <td>{{ data.type_of_property|slice:":forloop.counter0"|last }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
