@@ -2,11 +2,13 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class = "container">
-    <form method="post">
-        {% csrf_token %}
-        {{form|crispy}}
-        <button type="submit" class="btn btn-success">Login</button>
-    </form>
-</div>
+<form method="post">
+    {% csrf_token %}
+    {{form|crispy}}
+    <button type="submit" class="btn btn-success">Login</button>
+    <p>Don't have an account? <a href="{% url 'scraper_integration:registration' %}">Register</a></p>
+</form>
+<h4 class="text-info">LOGIN</h4>
+<h4 class="text-info">USERNAME: User</h4>
+<h4 class="text-info">PASSWORD: Testuser</h4>
 {% endblock %}

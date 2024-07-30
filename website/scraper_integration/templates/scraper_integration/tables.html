@@ -1,0 +1,46 @@
+{% extends 'scraper_integration/base.html' %}
+
+
+{% block content %}
+
+{% for table in analysed_table %}
+<h4>{{table.table.name}}</h4>
+<p>{{table.table.creation_date}}</p>
+<table class="table">
+    <thead class = "thead-dark">
+        <tr>
+            <th><th>Price</th>
+            <th>Price_per_sq_m</th>
+            <th>Sq_meters</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th class="col">Mean</th>
+            <td>{{table.avg_price}}</td>
+            <td>{{table.avg_price_per_sqm}}</td>
+            <td>{{table.avg_sq_meter}}</td>
+        </tr>
+        <tr>
+            <th class="col">Median</th>
+            <td>{{table.median_price}}</td>
+            <td>{{table.median_price_per_sqm}}</td>
+            <td>{{table.median_sq_meter}}</td>
+        </tr>
+        <tr>
+            <th class="col">Max</th>
+            <td>{{table.max_price}}</td>
+            <td>{{table.max_price_per_sqm}}</td>
+            <td>{{table.max_sq_meter}}</td>
+        </tr>
+        <tr>
+            <th class="col">Min</th>
+            <td>{{table.min_price}}</td>
+            <td>{{table.min_price_per_sqm}}</td>
+            <td>{{table.min_sq_meter}}</td>
+        </tr>
+    </tbody>
+</table>
+{% endfor %}
+
+{% endblock %}

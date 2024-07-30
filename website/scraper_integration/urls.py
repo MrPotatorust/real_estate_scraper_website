@@ -8,5 +8,6 @@ urlpatterns=[
     path('registration', views.registration, name='registration'),
     path('scraper', views.scraper, name='scraper'),
     path('results', views.results, name='results'),
+    path('tables', views.view_tables, name='view_tables'),
     path('logout', LogoutView.as_view(next_page='scraper_integration:main_page'), name='logout'),
 ]

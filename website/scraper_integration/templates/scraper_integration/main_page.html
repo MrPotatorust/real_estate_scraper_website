@@ -3,11 +3,18 @@
 
 {% block content %}
 
+<h1 class="text-danger">Welcome, this is still in progress I will continue developing this</h1>
+<h3>All of these links and the navbar works</h3>
+<h4 class="text-info">LOGIN</h4>
+<h4 class="text-info">USERNAME: User</h4>
+<h4 class="text-info">PASSWORD: Testuser</h4>
+<h5>for admin its- username: admin, passw: admin</h5>
+<ul class="list-group">
+    <li class="list-group-item list-group-item-action"><a href="/login">LOGIN Here</a></li>
+    <li class="list-group-item list-group-item-action"><a href="{% url 'scraper_integration:registration' %}">Register</a></li>
+    <li class="list-group-item list-group-item-action"><a href="{% url 'scraper_integration:scraper' %}">Scraper</a></li>
+    <li class="list-group-item list-group-item-action"><a href="{% url 'scraper_integration:view_tables' %}">View your tables</a></li>
 </ul>
-    <li><a href="/login">LOGIN NOW</a></li>
-    <li><a href="{% url 'scraper_integration:registration' %}">Register</a></li>
-    <li><a href="{% url 'scraper_integration:scraper' %}">Scraper</a></li>
-<ul>
+<p>The scraped page <a href="https://nehnutelnosti.sk">nehnutelnosti.sk</a></p>
     
-
 {% endblock %}
