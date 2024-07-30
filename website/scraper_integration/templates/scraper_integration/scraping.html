@@ -1,4 +1,6 @@
-<form method="post">
-    {% csrf_token %}
-    
-</form>
+{% extends 'scraper_integration/base.html' %}
+
+{% block content %}
+<p>SCRAPER</p>
+<p>{{objs[0]}}</p>
+{% endblock %}

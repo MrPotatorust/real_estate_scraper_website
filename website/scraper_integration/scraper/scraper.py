@@ -11,7 +11,6 @@ import numpy as np
 import datetime
 import os
 
-import time
 
 
 
@@ -169,4 +168,4 @@ def get_data(buy_or_rent, type_of_property, location):
 
     #creates the dataframe and puts it in the csv
     df = pd.DataFrame(data)
-    df.to_csv((directory+file_name+"_"+str(cur_date.date())+".csv"), index=False)
+    return df
