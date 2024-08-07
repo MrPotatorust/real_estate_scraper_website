@@ -36,8 +36,10 @@ def scraper(request):
             request.session['scraper_data'] = data
             return redirect(reverse('scraper_integration:results'))
     else:
+        user = request.user
+        length = TableInfo.objects.filter(owner=user).count()
         form = ScrapingArgsForm()
-        return render(request, 'scraper_integration/scraping.html', {'form': form})
+        return render(request, 'scraper_integration/scraping.html', {'form': form, 'length': length})
 
 @login_required(login_url='login')
 def view_tables(request):
