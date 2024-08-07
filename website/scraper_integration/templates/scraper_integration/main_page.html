@@ -4,7 +4,7 @@
 {% block content %}
 
 <h4 class="text-info">LOGIN</h4>
-<h4 class="text-info">USERNAME: User</h4>
+<h4 class="text-info">USERNAME: user</h4>
 <h4 class="text-info">PASSWORD: Testuser</h4>
 <h5>for admin - username: admin, passw: admin</h5>
 <ul class="list-group">
@@ -13,8 +13,5 @@
     <li class="list-group-item list-group-item-action"><a class="text-decoration-none text-muted" href="{% url 'scraper_integration:scraper' %}">Scraper</a></li>
     <li class="list-group-item list-group-item-action"><a class="text-decoration-none text-muted" href="{% url 'scraper_integration:view_tables' %}">View your tables</a></li>
 </ul>
-<footer class="fixed-bottom text-center">
-    The scraped page <a href="https://nehnutelnosti.sk">nehnutelnosti.sk</a>
-</footer>
     
 {% endblock %}

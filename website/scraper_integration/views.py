@@ -41,6 +41,13 @@ def scraper(request):
 
 @login_required(login_url='login')
 def view_tables(request):
+    if request.method == "POST":
+        table_id = request.POST.get('table-id')
+
+        if table_id:
+            table = TableInfo.objects.get(id=table_id)
+            table.delete()
+
     user = request.user
     table_info = TableInfo.objects.filter(owner=user)
     analysed_table = AnalysedData.objects.filter(table__in=table_info)

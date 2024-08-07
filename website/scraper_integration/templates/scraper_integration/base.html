@@ -18,7 +18,7 @@
                         <a class="nav-link" href="{% url 'scraper_integration:scraper' %}" class="nav-link">Scraper</a><a href="{% url 'scraper_integration:registration' %}"></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'scraper_integration:view_tables' %}">View your tables</a>
+                        <a class="nav-link" href="{% url 'scraper_integration:view_tables' %}">Your tables</a>
                     </li>
                 </ul>
             </div>
@@ -43,6 +43,9 @@
     </nav>
     <div class="container">
         {% block content %}{% endblock %}
+        <footer class="fixed-bottom text-center">
+            The scraped page <a href="https://nehnutelnosti.sk">nehnutelnosti.sk</a>
+        </footer>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

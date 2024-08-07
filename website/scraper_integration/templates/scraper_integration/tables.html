@@ -6,6 +6,10 @@
 {% for table in analysed_table %}
 <h4>{{table.table.name}}</h4>
 <p>{{table.table.creation_date}}</p>
+<form method="post">
+    {% csrf_token %}
+    <button class="btn btn-danger" name="table-id" value="{{table.table.id}}">Delete</button>
+</form>
 <table class="table">
     <thead class = "thead-dark">
         <tr>
