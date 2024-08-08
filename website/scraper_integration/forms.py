@@ -19,3 +19,8 @@ class ScrapingArgsForm(forms.Form):
     )
 
     location = forms.CharField(max_length=50)
+
+class PasswordChangeForm(forms.Form):
+    username = forms.CharField(max_length=30)
+    password1 = forms.CharField(label='New password', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Repeat password', widget=forms.PasswordInput)

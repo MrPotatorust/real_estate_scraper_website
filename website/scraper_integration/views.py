@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-from .forms import RegistrationForm, ScrapingArgsForm
+from django.contrib.auth.models import User
+from .forms import RegistrationForm, ScrapingArgsForm, PasswordChangeForm
 from .models import TableInfo, ScrapedData, AnalysedData
 from .custom_functions import meanD, minD, maxD, medianD
 
@@ -88,3 +89,19 @@ def results(request):
     analysis.save()
 
     return render(request, 'scraper_integration/results.html', {'data': data, 'range': data_len})
+
+def password_reset(request):
+    form = PasswordChangeForm()
+
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+        if password1 == password2:
+            user = User.objects.get(username=username)
+            user.set_password(password1)
+            user.save()
+            return render(request, 'registration/password_reset.html', {'message': 'message'})
+        else:
+            return render(request, 'registration/password_reset.html', {'failed': 'failed', 'form': form})
+    return render(request, 'registration/password_reset.html', {'form':form})
