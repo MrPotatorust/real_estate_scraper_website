@@ -54,7 +54,7 @@ def view_tables(request):
     user = request.user
     table_info = TableInfo.objects.filter(owner=user)
     analysed_table = AnalysedData.objects.filter(table__in=table_info)
-    return render(request, 'scraper_integration/tables.html', {'analysed_table': analysed_table})
+    return render(request, 'scraper_integration/tables.html', {'analysed_table': analysed_table, 'num_of_tables' : table_info.count()})
 
 @login_required(login_url='login')
 def results(request):

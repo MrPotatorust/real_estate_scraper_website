@@ -3,7 +3,9 @@
 
 {% block content %}
 
+
 {% if analysed_table %}
+    <h4 class="text-end">Number of tables: {{num_of_tables}}/5</h4>
     {% for table in analysed_table %}
     <h4>{{table.table.name}}</h4>
     <p>{{table.table.creation_date}}</p>
