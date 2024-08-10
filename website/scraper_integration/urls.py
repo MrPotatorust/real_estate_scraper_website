@@ -11,4 +11,5 @@ urlpatterns=[
     path('tables', views.view_tables, name='view_tables'),
     path('logout', LogoutView.as_view(next_page='scraper_integration:main_page'), name='logout'),
     path('password_reset', views.password_reset, name='password_reset'),
+    path('tiers', views.tiers, name='tiers'),
 ]
