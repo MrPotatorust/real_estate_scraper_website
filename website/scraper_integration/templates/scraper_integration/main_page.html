@@ -3,7 +3,34 @@
 
 {% block content %}
 
-<h4 class="text-info">LOGIN</h4>
+<div class="text-center main-page-heading">
+    <h1>Welcome this is my personal web scraper project</h1>
+    <em>This project is mostly focused on the backend. I will use react on my next project tho!</em>
+</div>
+<section class= "">
+    <h2 class="align-self-center mb-5">What can you do here?</h2>
+    <ol class="fs-3">
+        <li class="">
+            <a href="{% url 'scraper_integration:registration' %}" class="fs-3 text-decoration-none text-reset">You can register, login and reset your password</a>
+            <p class="fs-5">Here you can register, login and reset your password</p>
+        </li>
+        <li class="">
+            <a href="{% url 'scraper_integration:scraper' %}" class="fs-3 text-decoration-none text-reset">You can scrape a real estate website</a>
+            <p class="fs-5">Here you can pick the city and type of real estate you want to scrape.</p>
+        </li>
+        <li class="">
+            <a href="{% url 'scraper_integration:view_tables' %}" class="fs-3 text-decoration-none text-reset">You can view the saved data</a>
+            <p class="fs-5">Here you can view the saved tables and delete them</p>
+        </li>
+        <li class="">
+            <a href="{% url 'scraper_integration:tiers' %}" class="fs-3 text-decoration-none text-reset">You can choose which tier you want</a>
+            <p class="fs-5">Here you can select the desired tier. Tiers limit the number of saved tables you can have at a time.</p>
+        </li>
+    </=l>
+</section>
+
+
+{% comment %} <h4 class="text-info">LOGIN</h4>
 <h4 class="text-info">USERNAME: user</h4>
 <h4 class="text-info">PASSWORD: Testuser</h4>
 <h5>for admin - username: admin, passw: admin</h5>
@@ -14,6 +41,6 @@
     <li class="list-group-item list-group-item-action"><a class="text-decoration-none text-muted" href="{% url 'scraper_integration:view_tables' %}">View your tables</a></li>
     <li class="list-group-item list-group-item-action"><a class="text-decoration-none text-muted" href="{% url 'scraper_integration:tiers' %}">Available tiers</a></li>
 
-</ul>
+</ul> {% endcomment %}
     
 {% endblock %}
