@@ -117,12 +117,15 @@ def password_reset(request):
 def tiers(request):
     user = request.user
 
-    if request.method == "POST":
-        group_name = request.POST.get('tier')
-        new_group = Group.objects.get(name=group_name)
-        user.groups.clear()
-        user.groups.add(new_group)
+    if user.is_authenticated:
 
-    group = user.groups.first()
+        if request.method == "POST":
+            group_name = request.POST.get('tier')
+            new_group = Group.objects.get(name=group_name)
+            user.groups.clear()
+            user.groups.add(new_group)
 
-    return render(request, 'scraper_integration/tiers.html', {'cur_group': group.name})
+        group = user.groups.first()
+        return render(request, 'scraper_integration/tiers.html', {'cur_group': group.name})
+    
+    return render(request, 'scraper_integration/tiers.html', {'logged_in': False})
