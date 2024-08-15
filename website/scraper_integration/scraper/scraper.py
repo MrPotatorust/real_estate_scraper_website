@@ -4,14 +4,10 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 
-import pandas as pd
+
 import numpy as np
 
 
-import datetime
-import os
-
-import time
 
 
 
@@ -19,10 +15,22 @@ def convert_to_num(num):
     return num.replace(",", ".").replace(" ", "")
 
 
+def accept_cookies(driver, wait):
+    #CHANGING TO COOKIES IFRAME
+    iframe = wait.until(EC.presence_of_element_located((By.ID, "sp_message_iframe_1109525")))
+    driver.switch_to.frame(iframe)
+
+    #REJECTING COOKIES
+    wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@title='Pokračovať s nevyhnutnými cookies →']"))).click()
+
+    #CHANGING BACK TO MAIN PAGE
+    driver.switch_to.default_content()
+
+
 def get_data(buy_or_rent, type_of_property, location):
 
     driver = webdriver.Chrome()
-    wait = WebDriverWait(driver, 10)
+    wait = WebDriverWait(driver, 5)
 
 
     data = {"price": [], "price_per_sq_m": [], "sq_meter": [], "location": [], "type_of_property": []}
@@ -31,37 +39,35 @@ def get_data(buy_or_rent, type_of_property, location):
 
     driver.get("https://www.nehnutelnosti.sk/")
 
-    #CHANGING TO IFRAME
 
-    #changing to the cookies iframe
-    iframe = wait.until(EC.presence_of_element_located((By.ID, "sp_message_iframe_1109525")))
-
-    driver.switch_to.frame(iframe)
-
-    #rejecting most of the cookies
-    wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@title='Pokračovať s nevyhnutnými cookies →']"))).click()
+    #CLICKING THE DROPDOWN MENU
+    try:
+        wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@placeholder="Kde hľadáte?"]'))).click()
+        accept_cookies(driver, wait)
+    except:
+        accept_cookies(driver, wait)
 
 
-    #CHANGING BACK TO MAIN PAGE
+        
 
-    driver.switch_to.default_content()
 
-    #opening the dropdown menu
-    driver.find_element(By.XPATH, "//input[@placeholder='Celá ponuka']").click()
 
-    #selects if you want to buy or rent
-    driver.find_element(By.XPATH, f"(//div[contains(@class, 'css-13womkq')])[{buy_or_rent}]").click()
+    #GETS AND ENTERS THE LOCATION
+    location_el = wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@placeholder="Kde hľadáte?"]')))
+    location_el.send_keys(location)
+    try:
+        wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div.mui-1krtfkx"))).click()
+    except:
+        location_el.click()
+        driver.find_element(By.CSS_SELECTOR, "div.mui-1krtfkx").click()
 
-    #searches for the desired location
-    driver.find_element(By.XPATH, "//input[@placeholder='Kde hľadáte?']").send_keys(location)
+    # CHOOSES IF YOU WANT TO RENT OR BUY
+    wait.until(EC.element_to_be_clickable((By.XPATH, f"(//div[contains(@class, 'mui-13womkq')])[{buy_or_rent}]"))).click()
 
-    #selecting the first instance of the location
-    wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div.css-1krtfkx"))).click()
+    # CHOOSES IF YOU WANT APARTMENTS OR HOUSES
+    wait.until(EC.element_to_be_clickable((By.XPATH, f"(//div[contains(@class, 'mui-120h6tl')])[{type_of_property}]"))).click()
 
-    #selects which type of property you want to search for
-    driver.find_element(By.XPATH, f"(//div[contains(@class, 'css-120h6tl')])[{type_of_property}]").click()
-
-    #clicks the search button
+    #SEARCHES
     wait.until(EC.element_to_be_clickable((By.XPATH, '//button[.//p[text()="Hľadať"]]'))).click()
 
 
@@ -106,18 +112,17 @@ def get_data(buy_or_rent, type_of_property, location):
                 data["price_per_sq_m"].append(np.nan)
                 no_price_per_meter = False
 
-            else:
-                data["price"].append(float(convert_to_num(text[:index-2])))
-
+            elif buy_or_rent == 1:
 
 
                 #checks if its a house or a apartment
-                if buy_or_rent == 1:
-                    data["price_per_sq_m"].append(float(convert_to_num(text[index+2:-4])))
+                data["price"].append(float(convert_to_num(text[:index-1])))
+                data["price_per_sq_m"].append(float(convert_to_num(text[index+2:-4])))
 
-                else:
-                    data["price_per_sq_m"].append(float(convert_to_num(text[index:-5])))
-            
+            else:
+                data["price"].append(float(convert_to_num(text[:index-2])))
+                data["price_per_sq_m"].append(float(convert_to_num(text[index+1:-9])))
+
         #scrapes and append rest of the data
         count = 0
         for info in main_info:
@@ -149,7 +154,6 @@ def get_data(buy_or_rent, type_of_property, location):
         driver.get(url+f"?p[page]={page}")
         wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "div.advertisement-item--content__price")))
         
-
 
     driver.quit()
 
